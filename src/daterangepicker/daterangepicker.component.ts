@@ -190,7 +190,6 @@ export class DaterangepickerComponent implements OnInit {
           }
         }
     }
-
     renderRanges() {
         this.rangesArray = [];
         let start, end;
@@ -986,6 +985,7 @@ export class DaterangepickerComponent implements OnInit {
 
         // This is to cancel the blur event handler if the mouse was in one of the inputs
         e.stopPropagation();
+
     }
     /**
      *  Click on the custom range
@@ -1044,8 +1044,11 @@ export class DaterangepickerComponent implements OnInit {
                 }
               this.changeApplyBtnDisabled();
             }
+
         }
     }
+
+
 
     show(e?) {
         if (this.isShown) { return; }
