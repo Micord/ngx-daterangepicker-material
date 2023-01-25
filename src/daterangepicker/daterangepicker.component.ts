@@ -1027,8 +1027,9 @@ export class DaterangepickerComponent implements OnInit {
                 if (this.maxDate && this.maxDate.isSame(dates[0], 'month')) {
                     this.rightCalendar.month.month(dates[0].month());
                     this.rightCalendar.month.year(dates[0].year());
-                    this.leftCalendar.month.month(dates[0].month() - 1);
-                    this.leftCalendar.month.year(dates[1].year() );
+                    const prevMonth = dates[0].clone().subtract(1, 'month');
+                    this.leftCalendar.month.month(prevMonth.month());
+                    this.leftCalendar.month.year(prevMonth.year());
                 } else {
                     this.leftCalendar.month.month(dates[0].month());
                     this.leftCalendar.month.year(dates[0].year());
