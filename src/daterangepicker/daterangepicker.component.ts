@@ -94,6 +94,8 @@ export class DaterangepickerComponent implements OnInit {
     firstDayOfNextMonthClass: string = null;
     @Input()
     lastDayOfPreviousMonthClass: string = null;
+    @Input()
+    calendarLazyRender: boolean = false;
 
     _locale: LocaleConfig = {};
     @Input() set locale(value) {
@@ -631,12 +633,14 @@ export class DaterangepickerComponent implements OnInit {
     /**
      *  This is responsible for updating the calendars
      */
-    updateCalendars() {
+    updateCalendars(lazy: boolean = false) {
         this.renderCalendar(SideEnum.left);
         this.renderCalendar(SideEnum.right);
 
         if (this.endDate === null) { return; }
-        this.calculateChosenLabel();
+        if (!lazy) {
+          this.calculateChosenLabel();
+        }
     }
     updateElement() {
         const format = this.locale.displayFormat ? this.locale.displayFormat : this.locale.format;
@@ -879,7 +883,7 @@ export class DaterangepickerComponent implements OnInit {
         } else {
             this.rightCalendar.month.subtract(1, 'month');
         }
-        this.updateCalendars();
+        this.updateCalendars(this.calendarLazyRender);
     }
     /**
      * Click on next month
@@ -894,7 +898,7 @@ export class DaterangepickerComponent implements OnInit {
                 this.leftCalendar.month.add(1, 'month');
             }
         }
-        this.updateCalendars();
+        this.updateCalendars(this.calendarLazyRender);
     }
 
     /**
@@ -1018,7 +1022,7 @@ export class DaterangepickerComponent implements OnInit {
             }
             this.rangeClicked.emit({label: label, dates: dates});
             if (!this.keepCalendarOpeningWithRange || this.autoApply) {
-                this.updateCalendars();
+                this.updateCalendars(this.calendarLazyRender);
                 this.clickApply();
             } else {
                 if (!this.alwaysShowCalendars) {
@@ -1038,7 +1042,7 @@ export class DaterangepickerComponent implements OnInit {
                     this.rightCalendar.month.month(nextMonth.month());
                     this.rightCalendar.month.year(nextMonth.year() );
                 }
-                this.updateCalendars();
+                this.updateCalendars(this.calendarLazyRender);
                 if (this.timePicker) {
                     this.renderTimePicker(SideEnum.left);
                     this.renderTimePicker(SideEnum.right);
