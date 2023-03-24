@@ -116,7 +116,10 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
   timePickerIncrement: number = 1;
   @Input()
   timePickerSeconds: Boolean = false;
-  @Input() closeOnAutoApply = true;
+  @Input()
+  closeOnAutoApply = true;
+  @Input()
+  calendarLazyRender: boolean = false;
   _locale: LocaleConfig = {};
   @Input() set locale(value) {
     this._locale = {...this._localeService.config, ...value};
@@ -215,6 +218,7 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
     this.localeDiffer = this.differs.find(this.locale).create();
     this.picker.closeOnAutoApply = this.closeOnAutoApply;
     this.picker.defaultRange = this.defaultRange;
+    this.picker.calendarLazyRender = this.calendarLazyRender;
   }
 
   ngOnChanges(changes: SimpleChanges): void  {
