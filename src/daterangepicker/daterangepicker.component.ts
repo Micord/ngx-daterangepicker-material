@@ -670,6 +670,7 @@ export class DaterangepickerComponent implements OnInit {
         if (!this.locale || !this.locale.separator) {
             this._buildLocale();
         }
+        let appropriateRanges = [];
         let customRange = true;
         let i = 0;
         if (this.rangesArray.length > 0) {
@@ -681,20 +682,23 @@ export class DaterangepickerComponent implements OnInit {
                       if (this.startDate.format(format) === this.ranges[range][0].format(format)
                         && this.endDate.format(format) === this.ranges[range][1].format(format)) {
                             customRange = false;
-                            this.chosenRange = this.rangesArray[i];
-                            break;
+                            appropriateRanges.push(this.rangesArray[i]);
                         }
                     } else {
                         // ignore times when comparing dates if time picker is not enabled
                         if (this.startDate.format('YYYY-MM-DD') === this.ranges[range][0].format('YYYY-MM-DD')
                           && this.endDate.format('YYYY-MM-DD') === this.ranges[range][1].format('YYYY-MM-DD')) {
                             customRange = false;
-                            this.chosenRange = this.rangesArray[i];
-                            break;
+                            appropriateRanges.push(this.rangesArray[i]);
                         }
                     }
                     i++;
                 }
+            }
+            if (appropriateRanges.length === 1) {
+                this.chosenRange = appropriateRanges.pop();
+            } else if (appropriateRanges.length > 1 && !appropriateRanges.includes(this.chosenRange)) {
+                this.chosenRange = appropriateRanges.pop();
             }
             if (customRange) {
                 if (this.showCustomRangeLabel) {
