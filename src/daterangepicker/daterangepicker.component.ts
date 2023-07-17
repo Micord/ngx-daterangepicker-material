@@ -402,7 +402,7 @@ export class DaterangepickerComponent implements OnInit {
             startDay = daysInLastMonth - 6;
         }
 
-        let curDate = moment([lastYear, lastMonth, startDay, 12, minute, second]);
+        let curDate = moment([lastYear, lastMonth, startDay, 12, minute, second]).utc(true);
 
         for (let i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add(24, 'hour')) {
             if (i > 0 && col % 7 === 0) {
