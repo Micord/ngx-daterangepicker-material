@@ -489,17 +489,17 @@ export class DaterangepickerComponent implements OnInit {
 
         this._buildCells(calendar, side);
     }
-    setStartDate(startDate) {
+    setStartDate(startDate, pickingDate: boolean = true) {
         if (typeof startDate === 'string') {
             this.startDate = moment(startDate, this.locale.format);
         }
 
         if (typeof startDate === 'object') {
-            this.pickingDate = true;
+            this.pickingDate = pickingDate;
             this.startDate = moment(startDate);
         }
         if (!this.timePicker) {
-            this.pickingDate = true;
+            this.pickingDate = pickingDate;
             this.startDate = this.startDate.startOf('day');
         }
 
@@ -965,7 +965,7 @@ export class DaterangepickerComponent implements OnInit {
             }
             if (date.isBefore(this.startDate, 'day') === true && this.customRangeDirection === true) {
                 this.setEndDate(this.startDate);
-                this.setStartDate(date.clone());
+                this.setStartDate(date.clone(), false);
             } else {
                 this.setEndDate(date.clone());
             }
